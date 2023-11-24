@@ -32,10 +32,7 @@ conn = sqlite3.connect('example.db')
 # Create a cursor object to execute SQL queries
 cursor = conn.cursor()
 
-# Clear the 'posts' table
-cursor.execute('DELETE FROM posts')
-
-# Create a table to store post data
+# Create a table to store post data if it doesn't exist
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS posts (
         id INTEGER PRIMARY KEY,
@@ -44,6 +41,15 @@ cursor.execute('''
         body TEXT
     )
 ''')
+
+# Commit the changes
+conn.commit()
+
+# Clear the 'posts' table
+cursor.execute('DELETE FROM posts')
+
+# Commit the changes
+conn.commit()
 
 # Insert posts into the table
 for post in posts:
